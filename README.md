@@ -19,7 +19,6 @@ The system supports:
 * Spring Boot
 * Spring Data JPA
 * MySQL
-* Hibernate
 * Lombok
 
 ---
@@ -44,8 +43,8 @@ CREATE DATABASE class_booking_system;
 ```
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/class_booking_system
-    username: root
+    url: jdbc:mysql://localhost:3306/database_name
+    username: your_username
     password: your_password
 
   jpa:
