@@ -1,0 +1,165 @@
+{
+  "info": {
+    "_postman_id": "1b1c366e-3288-4795-ae12-c6e996521e42",
+    "name": "Global Class Offering Booking System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27343844"
+  },
+  "item": [
+    {
+      "name": "Offering create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"courseId\": 1,\r\n  \"teacherId\": 101,\r\n  \"timezone\": \"Asia/Kolkata\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/teacher/offerings",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "teacher",
+            "offerings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Offerings By Teacher ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"courseId\":1,\r\n    \"teacherId\":1,\r\n    \"timezone\":\"Asia\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/teacher/offerings?teacherId=101",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "teacher",
+            "offerings"
+          ],
+          "query": [
+            {
+              "key": "teacherId",
+              "value": "101"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Sessions",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"startTime\": \"2026-06-01T18:00:00\",\r\n    \"endTime\": \"2026-06-01T19:00:00\"\r\n  },\r\n  {\r\n    \"startTime\": \"2026-06-08T18:00:00\",\r\n    \"endTime\": \"2026-06-08T19:00:00\"\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/teacher/offerings/1/sessions",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "teacher",
+            "offerings",
+            "1",
+            "sessions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Book Offering",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"parentId\": 1,\r\n  \"offeringId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/parent/bookings",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "parent",
+            "bookings"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Bookings by parent Id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"parentId\": 1,\r\n  \"offeringId\": 1\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/parent/bookings?parentId=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "parent",
+            "bookings"
+          ],
+          "query": [
+            {
+              "key": "parentId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
