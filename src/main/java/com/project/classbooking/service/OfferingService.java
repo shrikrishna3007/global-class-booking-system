@@ -10,6 +10,7 @@ import com.project.classbooking.model.SessionEntity;
 import com.project.classbooking.repository.CourseRepository;
 import com.project.classbooking.repository.OfferingRepository;
 import com.project.classbooking.repository.SessionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class OfferingService {
     public OfferingResponse createOffering(CreateOfferingRequest createOfferingRequest){
         // Fetch course details
         CourseEntity course = courseRepository.findById(createOfferingRequest.getCourseId())
-                .orElseThrow(()-> new RuntimeException("Course not found !!"));
+                .orElseThrow(()-> new EntityNotFoundException("Course not found !!"));
 
         // Create Offering
         OfferingEntity offering = new OfferingEntity();
@@ -57,7 +58,7 @@ public class OfferingService {
     public void addSessions(Long offeringId, List<CreateSessionRequest> sessionRequests) {
         // get offering
         OfferingEntity offering = offeringRepository.findById(offeringId)
-                .orElseThrow(()-> new RuntimeException("Offering not found !"));
+                .orElseThrow(()-> new EntityNotFoundException("Offering not found !"));
 
         ZoneId zone = ZoneId.of(offering.getTimezone());
 

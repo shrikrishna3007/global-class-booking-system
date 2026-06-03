@@ -1,6 +1,5 @@
 package com.project.classbooking.dto.response;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

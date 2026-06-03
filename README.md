@@ -20,6 +20,7 @@ The system supports:
 * Spring Data JPA
 * MySQL
 * Lombok
+* Springdoc OpenAPI (Swagger)
 
 ---
 
@@ -43,15 +44,17 @@ CREATE DATABASE class_booking_system;
 ```
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/database_name
-    username: your_username
-    password: your_password
+    url: jdbc:mysql://localhost:3306/class_booking_system
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 ```
+
+Ensure MySQL is running and credentials match the configuration.
 
 ### 4. Run Application
 
@@ -63,13 +66,17 @@ mvn spring-boot:run
 
 ## Environment Variables
 
-* DB_URL
 * DB_USERNAME
 * DB_PASSWORD
 
 ---
 
 ## API Documentation
+
+Swagger UI:
+http://localhost:8080/swagger-ui/index.html
+
+---
 
 ### Teacher APIs
 
@@ -121,6 +128,22 @@ POST /api/parent/bookings
 }
 ```
 
+**Sample Response**
+
+```
+{
+  "bookingId": 1,
+  "offeringId": 1,
+  "sessions": [
+    {
+      "sessionId": 1,
+      "startTime": "2026-06-01T18:00:00",
+      "endTime": "2026-06-01T19:00:00"
+    }
+  ]
+}
+```
+
 ---
 
 #### Get Bookings
@@ -131,14 +154,14 @@ GET /api/parent/bookings?parentId=1
 
 ## Database Schema Overview
 
-Course
+### Course
 
 * course_id (PK)
 * course_name
 * course_description
 * created_at
 
-Offering
+### Offering
 
 * offering_id (PK)
 * course_id (FK)
@@ -146,21 +169,21 @@ Offering
 * timezone
 * created_at
 
-Session
+### Session
 
 * session_id (PK)
 * offering_id (FK)
 * start_time
 * end_time
 
-Booking
+### Booking
 
 * booking_id (PK)
 * parent_id
 * offering_id (FK)
 * booked_at
 
-Booking_Session
+### BookingSession
 
 * booking_session_id (PK)
 * booking_id (FK)
@@ -199,9 +222,10 @@ Note: Advanced locking not implemented due to scope.
 
 1. Start MySQL
 2. Create database
-3. Run Spring Boot app
-4. Insert course manually
-5. Test APIs using Postman
+3. Configure environment variables
+4. Run Spring Boot app
+5. Insert course manually
+6. Test APIs using Postman or Swagger
 
 ---
 
@@ -216,7 +240,7 @@ VALUES (1, 'Test Course', 'Demo Course', NOW());
 
 ## Known Limitations
 
-* Conflict detection implemented but needs refinement
+* Conflict detection implemented but can be further refined
 * Some edge cases may not be fully handled
 * No pagination or filtering
 * No authentication

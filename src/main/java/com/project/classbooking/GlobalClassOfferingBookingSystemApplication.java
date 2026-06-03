@@ -9,5 +9,4 @@ public class GlobalClassOfferingBookingSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GlobalClassOfferingBookingSystemApplication.class, args);
 	}
-
 }

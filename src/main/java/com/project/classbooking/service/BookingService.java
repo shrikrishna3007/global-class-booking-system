@@ -9,6 +9,7 @@ import com.project.classbooking.model.OfferingEntity;
 import com.project.classbooking.model.SessionEntity;
 import com.project.classbooking.repository.BookingRepository;
 import com.project.classbooking.repository.OfferingRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,18 +29,17 @@ public class BookingService {
 
 
     @Transactional
-    public BookingResponse bookOffering(BookOfferingRequest request){
+    public BookingResponse createBookingForOffering(BookOfferingRequest request){
         // fetch offering
 
         OfferingEntity offering = offeringRepository.findById(request.getOfferingId())
-                .orElseThrow(()-> new RuntimeException("Offering not found !"));
+                .orElseThrow(()-> new EntityNotFoundException("Details not found."));
 
         // Get all sessions of the retrieved offering
         List<SessionEntity> sessionList = offering.getSessions();
 
-        if (sessionList == null || sessionList.isEmpty()){
-            throw new RuntimeException("No sessions available for this offering.");
-        }
+        validateSessions(sessionList);
+
         // Fetch existing bookings of parent
         List<BookingEntity> existingBookings =
                 bookingRepository.findByParentId(request.getParentId());
@@ -71,7 +71,7 @@ public class BookingService {
                                 existingEnd.isAfter(newStart);
 
                 if (overlap) {
-                    throw new RuntimeException("Booking conflict detected");
+                    throw new IllegalStateException("Booking conflict detected");
                 }
             }
         }
@@ -126,6 +126,12 @@ public class BookingService {
         response.setSessions(sessionResponses);
 
         return response;
+    }
+
+    private void validateSessions(List<SessionEntity> sessionList) {
+        if (sessionList == null || sessionList.isEmpty()){
+            throw new IllegalStateException("No sessions available for this offering.");
+        }
     }
 
     public List<BookingResponse> getBookingsByParent(Long parentId) {
